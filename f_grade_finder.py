@@ -223,10 +223,20 @@ class FGradeFinder:
 
     def place_fgrades(self, first_click_pos):
         self.fgrade_positions = set()
-        safe_area = {(first_click_pos[0]+dx, first_click_pos[1]+dy) for dx in range(-1, 2) for dy in range(-1, 2)}
+
+        # 첫 클릭 위치 주변 3x3 영역을 안전 구역으로 설정
+        r_click, c_click = first_click_pos
+        safe_area = set()
+        for dr in range(-1, 2):
+            for dc in range(-1, 2):
+                safe_area.add((r_click + dr, c_click + dc))
+
+        # 안전 구역을 피해 F학점 배치
         while len(self.fgrade_positions) < self.fgrades:
             pos = (random.randint(0, self.rows-1), random.randint(0, self.cols-1))
-            if pos not in safe_area: self.fgrade_positions.add(pos)
+            if pos not in safe_area:
+                self.fgrade_positions.add(pos)
+
         self.adjacent_counts = {}
         for r in range(self.rows):
             for c in range(self.cols):
@@ -236,7 +246,7 @@ class FGradeFinder:
                     for nc in range(max(0, c-1), min(self.cols, c+2)):
                         if (nr, nc) in self.fgrade_positions: count += 1
                 self.adjacent_counts[(r, c)] = count
-
+                
     def left_click_with_capture(self, r, c):
         if not self.game_over: self.capture_screen()
         self.left_click(r, c)
