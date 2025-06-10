@@ -284,7 +284,7 @@ class FGradeFinder:
         self.flags_label.config(text=f"남은 F: {self.flags_left:02d}")
         self.timer_label.config(text=f"시간: {self.elapsed_time:03d}")
     def open_custom_difficulty_dialog(self):
-        dialog = Toplevel(self.root); dialog.title("사용자 설정"); dialog.geometry("250x150"); dialog.resizable(False, False)
+        dialog = Toplevel(self.root); dialog.title("사용자 설정");  dialog.resizable(False, False)
         Label(dialog, text="가로 (9-30):").grid(row=0, column=0, padx=5, pady=5)
         rows_entry = Entry(dialog, width=10); rows_entry.grid(row=0, column=1); rows_entry.insert(0, str(self.rows))
         Label(dialog, text="세로 (9-24):").grid(row=1, column=0, padx=5, pady=5)
